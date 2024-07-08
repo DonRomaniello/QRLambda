@@ -43,5 +43,8 @@ awslocal lambda create-function-url-config \
     | pbcopy \
     > /dev/null
 
+# set up s3 bucket
+awslocal s3api create-bucket --bucket qr-code
+
 echo "URL for lambda has been copied to the clipboard."
 
