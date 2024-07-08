@@ -17,11 +17,10 @@ current_dir=$(pwd)
 # Change to src directory
 cd src
 
+rm -rf function.zip
+
 # Zip the lambda function with index.js at the root of the zip file
 zip -r function.zip index.js
-
-# Move the zip file to the original directory
-mv function.zip "$current_dir/src"
 
 # Return to the original directory
 cd "$current_dir"
