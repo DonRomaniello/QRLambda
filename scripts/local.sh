@@ -11,9 +11,20 @@ done
 
 echo "Container is healthy. Proceeding..."
 
+# Save current directory
+current_dir=$(pwd)
 
-# zip the lambda function
-zip -r src/function.zip src/index.js
+# Change to src directory
+cd src
+
+# Zip the lambda function with index.js at the root of the zip file
+zip -r function.zip index.js
+
+# Move the zip file to the original directory
+mv function.zip "$current_dir/src"
+
+# Return to the original directory
+cd "$current_dir"
 
 # set up the local lambda
 awslocal lambda create-function \
