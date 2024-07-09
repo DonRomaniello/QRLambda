@@ -1,5 +1,7 @@
 .DS_Store
 
 qrCodes/*
+s3_test_downloads/*
 
 !qrCodes/.gitkeep
+!s3_test_downloads/.gitkeep
