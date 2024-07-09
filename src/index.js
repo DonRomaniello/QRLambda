@@ -1,6 +1,6 @@
 exports.handler = async (event) => {
     try {
-        const id = Number(event.queryStringParameters.pi);   
+        const pi = Number(event.queryStringParameters.pi);   
 
         const response = {
             statusCode: 200,

@@ -80,7 +80,7 @@ async function downloadObject(bucketName, key, downloadPath) {
 // Assuming listParams is defined and includes the Bucket name
 s3Client.send(new ListObjectsCommand(listParams)).then(async (data) => {
     for (const item of data.Contents) {
-        const downloadPath = `../s3_test_downloads/${item.Key}`; // Define your download path
+        const downloadPath = `./s3_test_downloads/${item.Key}`; // Define your download path
         await downloadObject(listParams.Bucket, item.Key, downloadPath);
     }
 });
