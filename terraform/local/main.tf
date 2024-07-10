@@ -11,9 +11,20 @@ provider "aws" {
 
   endpoints {
     s3             = var.endpoint
+    lambda         = var.endpoint
   }
 }
 
+# add an s3 bucket
 resource "aws_s3_bucket" "qr-code-bucket" {
   bucket = "qr-code-bucket"
+}
+
+# add a lambda function
+resource "aws_lambda_function" "qr-code-lambda" {
+  function_name = "qr-code-lambda"
+  filename      = "${path.module}/../../src/function.zip"
+  handler       = "index.handler"
+  runtime       = "nodejs20.x"
+  role          = "arn:aws:iam::000000000000:role/lambda-role"
 }
