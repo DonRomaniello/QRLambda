@@ -1,4 +1,4 @@
-#!/bin/bash
+=#!/bin/bash
 
 # get docker up
 docker-compose up -d
@@ -25,14 +25,21 @@ zip -r function.zip index.js
 # Return to the original directory
 cd "$current_dir"
 
-# set up the local lambda
-awslocal lambda create-function \
-    --function-name localstack-lambda-url-example \
-    --runtime nodejs18.x \
-    --zip-file fileb://src/function.zip \
-    --handler index.handler \
-    --role arn:aws:iam::000000000000:role/lambda-role \
-    > /dev/null
+cd terraform/local
+
+terraform init
+
+terraform apply -var-file="localstack.tfvars" -auto-approve
+
+
+# # set up the local lambda
+# awslocal lambda create-function \
+#     --function-name localstack-lambda-url-example \
+#     --runtime nodejs20.x \
+#     --zip-file fileb://src/function.zip \
+#     --handler index.handler \
+#     --role arn:aws:iam::000000000000:role/lambda-role \
+#     > /dev/null
 
 # get a URL for the lambda and pipe output to jq
 awslocal lambda create-function-url-config \
@@ -43,7 +50,7 @@ awslocal lambda create-function-url-config \
     > /dev/null
 
 # set up s3 bucket
-awslocal s3api create-bucket --bucket qr-code
+# awslocal s3api create-bucket --bucket qr-code
 
 echo "URL for lambda has been copied to the clipboard."
 
