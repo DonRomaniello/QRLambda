@@ -1,4 +1,4 @@
-=#!/bin/bash
+#!/bin/bash
 
 # get docker up
 docker-compose up -d
