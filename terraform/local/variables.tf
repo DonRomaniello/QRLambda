@@ -21,3 +21,19 @@ variable "endpoint" {
   type        = string
   default     = "http://localhost:4566"
 }
+
+variable "skip_credentials_validation" {
+  description = "Only skip if running locally."
+  type = bool
+  default = false
+}
+
+variable "skip_metadata_api_check" {
+  type = bool
+  default = false
+}
+
+variable "skip_requesting_account_id" {
+  type = bool
+  default = false
+}
