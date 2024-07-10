@@ -43,7 +43,7 @@ terraform apply -var-file="localstack.tfvars" -auto-approve
 
 # get a URL for the lambda and pipe output to jq
 awslocal lambda create-function-url-config \
-    --function-name localstack-lambda-url-example \
+    --function-name qr-code-lambda \
     --auth-type NONE \
     | jq -r .FunctionUrl \
     | pbcopy \

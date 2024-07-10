@@ -37,3 +37,9 @@ variable "skip_requesting_account_id" {
   type = bool
   default = false
 }
+
+variable "path_to_lambda_zip" {
+  description = "Path to the lambda function zip file"
+  type        = string
+  default     = "$../../src/function.zip"
+}
