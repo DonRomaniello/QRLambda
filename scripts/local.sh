@@ -19,8 +19,10 @@ cd src
 
 rm -rf function.zip
 
+cd main
+
 # Zip the lambda function with index.js at the root of the zip file
-zip -r function.zip index.js
+zip -r ../function.zip .
 
 # Return to the original directory
 cd "$current_dir"
