@@ -16,8 +16,8 @@ provider "aws" {
 }
 
 # add an s3 bucket
-resource "aws_s3_bucket" "qr-code-bucket" {
-  bucket = "qr-code-bucket"
+resource "aws_s3_bucket" "hydra-qr-code-lambda" {
+  bucket = "hydra-qr-code-lambda"
 }
 
 # add a lambda function

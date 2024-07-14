@@ -44,7 +44,6 @@ exports.handler = async (event) => {
             Bucket,
             Key: bodyObject.lambdaTimestamp.toString() + "_" + bodyObject.posterId.toString() + ".txt",
             Body: Object.values(bodyObject).map(item => item ? item.toString() : " ").join(","),
-            // Body: "Test connections only!",
         };
 
         //  for now, wait to respond until after the file is uploaded

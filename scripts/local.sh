@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # get docker up
-docker-compose up -d
+docker compose up -d
 
 # Wait for a specific container to become "healthy"
 while [ "$(docker inspect -f {{.State.Health.Status}} local_qr_lambda)" != "healthy" ]; do
@@ -50,7 +50,7 @@ awslocal lambda create-function-url-config \
     > /dev/null
 
 # set up s3 bucket
-# awslocal s3api create-bucket --bucket qr-code
+awslocal s3api create-bucket --bucket hydra-qr-code-lambda
 
 echo "URL for lambda has been copied to the clipboard."
 

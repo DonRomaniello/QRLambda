@@ -14,7 +14,7 @@ const s3Client = new S3Client({
   forcePathStyle: true, // Required for LocalStack
 });
 
-const Bucket = "qr-code-bucket";
+const Bucket = "hydra-qr-code-bucket";
 
 // test writing to s3
 
