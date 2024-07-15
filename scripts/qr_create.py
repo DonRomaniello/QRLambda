@@ -8,9 +8,19 @@ directory = "qrCodes"
 if not os.path.exists(directory):
     os.makedirs(directory)
 
-
 amount = 5
 
-for i in range(amount):
+for pi in range(amount):
     # Run the qrencode command to generate the QR code
-    subprocess.run(["qrencode", "-t", "SVG", "-o", f"{directory}/qr{i}.svg", f"https://www.google.com?q={i}"])
+    subprocess.run([
+        "qrencode", # Command
+        "-i", # ignore case, output uppercase only
+        "-l", "M", # Error correction level
+        # "-S", # Structured symbols
+        # "-v", "21", # version number
+        "-t", "SVG", # type of output
+        "-m", "0", # margin
+        "-o", f"{directory}/qr{pi}.svg", # output file
+        f"https://mvzm6b3rsepubtdcbruam7lqzi0flelz.lambda-url.us-east-1.on.aws/?id={pi}&d=ps&sd=&p=classes".upper()])
+
+    
