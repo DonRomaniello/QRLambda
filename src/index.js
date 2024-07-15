@@ -3,8 +3,6 @@ const {
     PutObjectCommand,
  } = require("@aws-sdk/client-s3");
 
-let allErrors = [];
-
 const s3Client = new S3Client({});
 
 const Bucket = "hydra-qr-code-lambda";
@@ -21,23 +19,49 @@ async function uploadToS3(yourParams) {
     }
 }
 
+// instead of making a few different lambdas for each redirect,
+// use a dictionary of base urls
+const redirect_urls = {
+    "ps" : "prometheusstudios.org",
+    "tc" : "producedbythecore.com",
+    "eb" : "eventbrite.com"
+}
+
+// create the url
+const urlCreator = (domain = "ps", subdomain = null, path = null) => {
+    let url = "https://"
+    subdomain ? url = url + subdomain + "." : null;
+    url = url + redirect_urls[domain];
+    path ? url = url + "/" + path : null;
+    return url
+}
+
 exports.handler = async (event) => {
+    const queryParameters = {
+        pi: event.queryStringParameters?.pi,
+        domain: event.queryStringParameters?.d,
+        subdomain: event.queryStringParameters?.sd,
+        p: event.queryStringParameters?.p,
+    }
+    
+    const Location = urlCreator(queryParameters?.domain, queryParameters?.subdomain, queryParameters?.p)
+
     const response = {
         statusCode: 302,
         headers: {
-            Location: "https://example.com"
+            Location
         }
-        
     };
 
     try {
         const bodyObject = {
+            posterId : Number(queryParameters?.pi),
+            requestHumanTime: event.requestContext?.time,
             lambdaTimestamp : new Date().getTime(),
-            posterId : Number(event.queryStringParameters?.pi),
+            requestTimestamp: event.requestContext?.timeEpoch,
+            Location,
             browser: event.requestContext.http?.userAgent,
             ip: event.requestContext.http?.sourceIp,
-            requestHumanTime: event.requestContext?.time,
-            requestTimestamp: event.requestContext?.timeEpoch,
         }
 
         const uploadParams = {

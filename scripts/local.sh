@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # get docker up
-docker-compose up -d
+docker compose up -d
 
 # Wait for a specific container to become "healthy"
 while [ "$(docker inspect -f {{.State.Health.Status}} local_qr_lambda)" != "healthy" ]; do
@@ -42,12 +42,12 @@ terraform apply -var-file="localstack.tfvars" -auto-approve
 #     > /dev/null
 
 # get a URL for the lambda and pipe output to jq
-awslocal lambda create-function-url-config \
-    --function-name qr-code-lambda \
-    --auth-type NONE \
-    | jq -r .FunctionUrl \
-    | pbcopy \
-    > /dev/null
+# awslocal lambda create-function-url-config \
+#     --function-name qr-code-lambda \
+#     --auth-type NONE \
+#     | jq -r .FunctionUrl \
+#     | pbcopy \
+#     > /dev/null
 
 # set up s3 bucket
 # awslocal s3api create-bucket --bucket qr-code
