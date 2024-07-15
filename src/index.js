@@ -30,19 +30,21 @@ const redirect_urls = {
 // create the url
 const urlCreator = (domain = "ps", subdomain = null, path = null) => {
     let url = "https://"
-    subdomain ? url = url + subdomain + "." : null;
-    url = url + redirect_urls[domain];
-    path ? url = url + "/" + path : null;
-    return url
+    subdomain ? url += subdomain.toLowerCase() + "." : null;
+    url += redirect_urls[domain.toLowerCase()];
+    path ? url += "/" + path.toLowerCase() : null;
+    return url;
 }
 
 exports.handler = async (event) => {
     const queryParameters = {
-        pi: event.queryStringParameters?.pi,
-        domain: event.queryStringParameters?.d,
-        subdomain: event.queryStringParameters?.sd,
-        p: event.queryStringParameters?.p,
+        id: event.queryStringParameters?.ID,
+        domain: event.queryStringParameters?.D,
+        subdomain: event.queryStringParameters?.SD,
+        p: event.queryStringParameters?.P,
     }
+    
+    console.log(queryParameters)
     
     const Location = urlCreator(queryParameters?.domain, queryParameters?.subdomain, queryParameters?.p)
 
@@ -55,7 +57,7 @@ exports.handler = async (event) => {
 
     try {
         const bodyObject = {
-            posterId : Number(queryParameters?.pi),
+            posterId : Number(queryParameters?.id),
             requestHumanTime: event.requestContext?.time,
             lambdaTimestamp : new Date().getTime(),
             requestTimestamp: event.requestContext?.timeEpoch,
@@ -66,7 +68,7 @@ exports.handler = async (event) => {
 
         const uploadParams = {
             Bucket,
-            Key: bodyObject.lambdaTimestamp.toString() + "_" + bodyObject.posterId.toString() + ".txt",
+            Key: "scans/" + bodyObject.lambdaTimestamp.toString() + "_" + bodyObject.posterId.toString() + ".txt",
             Body: Object.values(bodyObject).map(item => item ? item.toString() : " ").join(","),
             // Body: "Test connections only!",
         };
