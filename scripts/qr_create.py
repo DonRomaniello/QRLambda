@@ -18,9 +18,11 @@ for pi in range(amount):
         "-l", "M", # Error correction level
         # "-S", # Structured symbols
         # "-v", "21", # version number
-        "-t", "SVG", # type of output
+        # "-t", "SVG", # type of output
+        "-t", "PNG", # type of output
         "-m", "0", # margin
         "-o", f"{directory}/qr{pi}.svg", # output file
+        # "-o", f"{directory}/qr{pi}.png", # output file
         f"https://mvzm6b3rsepubtdcbruam7lqzi0flelz.lambda-url.us-east-1.on.aws/?id={pi}&d=ps&sd=&p=classes".upper()])
 
     
